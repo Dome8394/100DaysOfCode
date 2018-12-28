@@ -76,6 +76,10 @@ There can be any number of Pathvariable-annotations inside a <code>@RequestMappi
 be expressed by Regular Expressions for more complex Pathvariables.
 
 # Java Persistance API
+=======
+- Apply knowledge in some kind of project such as a small online-store backend to store user information, store items, user authentification etc.
+
+# Data Persistance
 
 ## MongoDB
 TODO
@@ -101,6 +105,7 @@ Documents are basically JSON (JavaScript Object Notation) files which are struct
 
 JSON is a common file structure used in WWW to transmit data between clients and server. 
 
+
 If a document is generated & inserted into a collection with 
 
         db.customer.insert({first_name: "John", last_name: "Doe"});
@@ -109,7 +114,7 @@ you can retrieve the document by using
 
         db.customer.find();
 
-this retruns a list of all objects in the collection as a JSON, e. g.
+this returns a list of all objects in the collection as a JSON, e. g.
 
         { "_id" : ObjectId("5c222e425b987e0c6ac7485b"), "first_name" : "John", "last_name" : "Doe" }
 
