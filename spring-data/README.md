@@ -18,6 +18,12 @@ The Spring Web MVC Framework is build around the DispatcherServlet which is resp
 onto specific controllers. The framework makes the development of Web Application easier by reducing the amount of boilerplate
 code that usually has to be maintained as a developer such as server configuration. 
 
+The DispatcherServlet acts as a Front Controller (see Front Controller pattern as one of the Enterprise Application Patterns)
+which receives incoming HTTP requests and processes them. The processing happens by mapping requests on to relevant controllers
+in assistance of handler mappings.
+
+### RestController & ResponseBody
+
 The annotation <code>@RestController</code> includes the annotations <code>@Controller</code> and <code>@ResponseBody</code>
 thus eliminating the necessity to additionally annotate a method with <code>@ResponseBody</code>. <code>@Controller</code> was
 used before the introduction of <code>@RestController</code> in Spring Web MVC 4.0. With the  <code>@Controller</code> annotation
