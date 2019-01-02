@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,10 +38,9 @@ public class CustomerController {
         if (isEmpty(repository.findAll())) {
             log.info("No customers found!");
         } else {
-
+            log.info("Customers that are currently registered");
+            log.info("----------------------------------------");
             for (CustomerEntity customer : repository.findAll()) {
-                log.info("Customers that are currently registered");
-                log.info("----------------------------------------");
                 log.info(customer.toString());
             }
         }
@@ -57,6 +55,7 @@ public class CustomerController {
         return repository.findById(Id);
     }
 
+
     /**
      * Saves a customer Object to the database with the appropriate information provided.
      * A customer is saved with its firstname and lastname. The id of a new customer object is
@@ -64,21 +63,10 @@ public class CustomerController {
      */
     @PostMapping
     @RequestMapping(method = RequestMethod.POST, value = "/new", consumes = {"application/json",
-            "application/x-www-form-urlencoded"}, produces = {"application/json"})
-    public HttpStatus saveCustomer(CustomerEntity customerDetails) {
+            "application/x-www-form-urlencoded"})
+    public String saveCustomer(CustomerEntity customerDetails) {
         repository.save(customerDetails);
 
-        return HttpStatus.ACCEPTED;
+        return customerDetails.toString();
     }
-
-    @Bean
-    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-        MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        jsonConverter.setObjectMapper(objectMapper);
-        jsonConverter.setDefaultCharset(null);
-        return jsonConverter;
-    }
-
 }

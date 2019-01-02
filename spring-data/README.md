@@ -22,6 +22,10 @@ The DispatcherServlet acts as a Front Controller (see Front Controller pattern a
 which receives incoming HTTP requests and processes them. The processing happens by mapping requests on to relevant controllers
 in assistance of handler mappings.
 
+### Inversion of Control (IOC) and Dependency Injection (DI)
+
+TODO
+
 ### RestController & ResponseBody
 
 The annotation <code>@RestController</code> includes the annotations <code>@Controller</code> and <code>@ResponseBody</code>
