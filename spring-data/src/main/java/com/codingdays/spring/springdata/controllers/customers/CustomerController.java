@@ -1,14 +1,11 @@
 package com.codingdays.spring.springdata.controllers.customers;
 
+import com.codingdays.spring.springdata.controllers.exceptionhandlers.CustomersNotFoundException;
 import com.codingdays.spring.springdata.entities.CustomerEntity;
 import com.codingdays.spring.springdata.repositories.customer.CustomerEntityRepository;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -31,19 +28,18 @@ public class CustomerController {
      * any request parameters
      */
     @RequestMapping(method = RequestMethod.GET, value = "/all")
-    public void getCustomers() {
-
-        log.info("Message");
+    public Iterable<CustomerEntity> getCustomers() {
 
         if (isEmpty(repository.findAll())) {
-            log.info("No customers found!");
-        } else {
-            log.info("Customers that are currently registered");
-            log.info("----------------------------------------");
-            for (CustomerEntity customer : repository.findAll()) {
-                log.info(customer.toString());
-            }
+            //log.info("Sorry there are no customers registered yet!");
+            throw new CustomersNotFoundException();
         }
+
+//        log.info("Customers that are currently registered");
+//        log.info("----------------------------------------");
+
+        return repository.findAll();
+
     }
 
     /**
@@ -63,8 +59,9 @@ public class CustomerController {
      */
     @PostMapping
     @RequestMapping(method = RequestMethod.POST, value = "/new", consumes = {"application/json",
-            "application/x-www-form-urlencoded"})
-    public String saveCustomer(CustomerEntity customerDetails) {
+            "application/x-www-form-urlencoded"}, produces = {"application/x-www-form-urlencoded", "application/json"})
+    public String saveCustomer(@RequestBody CustomerEntity customerDetails) {
+
         repository.save(customerDetails);
 
         return customerDetails.toString();
