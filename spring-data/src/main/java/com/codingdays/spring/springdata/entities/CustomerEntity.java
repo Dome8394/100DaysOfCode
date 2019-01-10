@@ -1,15 +1,12 @@
 package com.codingdays.spring.springdata.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
 
-@Entity
 public class CustomerEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @org.springframework.data.annotation.Id
     private long Id;
 
     private String firstName;

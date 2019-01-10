@@ -24,8 +24,7 @@ public class CustomerController {
 
     /**
      * Retrieves a list of all customers that are currently saved
-     * in the database. This method only handles get requests without
-     * any request parameters
+     * in the database.
      */
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public Iterable<CustomerEntity> getCustomers() {
@@ -39,7 +38,6 @@ public class CustomerController {
 //        log.info("----------------------------------------");
 
         return repository.findAll();
-
     }
 
     /**
