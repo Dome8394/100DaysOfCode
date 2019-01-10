@@ -272,3 +272,10 @@ By using $set, the query is told to keep all previous information of the object 
         db.customer.find().forEach(function(doc) {print("Customer Name: " + doc.first_name)
         });
         
+        CMD ["java", "-jar", "spring-data-0.0.1-SNAPSHOT.jar"]
+        
+        
+        ARG JAR_FILE
+        COPY ./build/libs/spring-data-0.0.1-SNAPSHOT.jar /usr/src/customer/
+        WORKDIR /usr/src/customer
+        
