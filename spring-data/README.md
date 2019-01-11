@@ -279,3 +279,5 @@ By using $set, the query is told to keep all previous information of the object 
         COPY ./build/libs/spring-data-0.0.1-SNAPSHOT.jar /usr/src/customer/
         WORKDIR /usr/src/customer
         
+        ENTRYPOINT ["java", "-Dspring.data.mongodb.uri=mongodb://mongo/customers","/spring-data-0.0.1-SNAPSHOT.jar"]
+        

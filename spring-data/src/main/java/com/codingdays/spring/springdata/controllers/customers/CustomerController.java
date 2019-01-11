@@ -19,8 +19,13 @@ public class CustomerController {
 
     private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
 
-    @Autowired
     private CustomerEntityRepository repository;
+
+    @Autowired
+    public CustomerController(CustomerEntityRepository repository) {
+        this.repository = repository;
+    }
+
 
     /**
      * Retrieves a list of all customers that are currently saved
@@ -36,6 +41,9 @@ public class CustomerController {
 
 //        log.info("Customers that are currently registered");
 //        log.info("----------------------------------------");
+
+
+        log.info("Test, this is inside getCustomers()");
 
         return repository.findAll();
     }
