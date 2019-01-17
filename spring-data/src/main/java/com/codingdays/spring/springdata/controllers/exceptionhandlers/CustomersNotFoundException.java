@@ -9,4 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "There are no customers registered yet!")
 public class CustomersNotFoundException extends RuntimeException {
+
+    //TODO: lookup how proper exception handling is done in Spring
 }

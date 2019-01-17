@@ -35,15 +35,8 @@ public class CustomerController {
     public Iterable<CustomerEntity> getCustomers() {
 
         if (isEmpty(repository.findAll())) {
-            //log.info("Sorry there are no customers registered yet!");
             throw new CustomersNotFoundException();
         }
-
-//        log.info("Customers that are currently registered");
-//        log.info("----------------------------------------");
-
-
-        log.info("Test, this is inside getCustomers()");
 
         return repository.findAll();
     }

@@ -14,7 +14,7 @@ public class CustomerEntity {
     private String firstName;
     private String lastName;
 
-    protected CustomerEntity() {
+    public CustomerEntity() {
     }
 
     public CustomerEntity(String firstName, String lastName) {
