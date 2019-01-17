@@ -54,7 +54,7 @@ public class CustomerController {
     /**
      * Saves a customer Object to the database with the appropriate information provided.
      * A customer is saved with its firstname and lastname. The id of a new customer object is
-     * automatically generated as specified in the CustomerEntity class. Blub
+     * automatically generated as specified in the CustomerEntity class.
      */
     @PostMapping
     @RequestMapping(method = RequestMethod.POST, value = "/new", consumes = {"application/json",
