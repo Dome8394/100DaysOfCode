@@ -1,15 +1,13 @@
 package com.codingdays.spring.springdata.entities;
 
-import org.springframework.data.annotation.Id;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "customers")
 public class CustomerEntity {
 
-
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @org.springframework.data.annotation.Id
-    private long Id;
+    private String Id;
 
     private String firstName;
     private String lastName;
@@ -17,16 +15,17 @@ public class CustomerEntity {
     public CustomerEntity() {
     }
 
-    public CustomerEntity(String firstName, String lastName) {
+    public CustomerEntity(String firstName, String lastName, String Id) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.Id = Id;
     }
 
-    public long getId() {
+    public String getId() {
         return Id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         Id = id;
     }
 
@@ -49,7 +48,7 @@ public class CustomerEntity {
 
     @Override
     public String toString() {
-        return String.format("Customer[Id = %d, firstName = '%s', lastName = '%s']",
+        return String.format("Customer[Id = %s, firstName = '%s', lastName = '%s']",
                 Id, firstName, lastName);
     }
 }

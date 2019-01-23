@@ -1,7 +1,7 @@
 version: "0.0.1"
 services:
-  spring-data:
-    container_name: spring-data
+  spring-boot-app:
+    container_name: spring-boot-app
     restart: always
     build: .
     ports:

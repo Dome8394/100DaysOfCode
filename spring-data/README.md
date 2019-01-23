@@ -10,6 +10,13 @@
 - Apply knowledge in some kind of project such as a small online-store backend to store user information, store items, 
 user authentification etc.
 
+# To-do's | 20th January 2019
+
+- Finding the bug in POST request
+- (adding Spring Actuator)
+- think of a simple gui to use for adding and looking for users
+- research how to test spring applications
+
 # Spring Framework
 
 ## Spring Web MVC

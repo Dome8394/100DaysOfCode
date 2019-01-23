@@ -3,9 +3,12 @@ package com.codingdays.spring.springdata.controllers.customers;
 import com.codingdays.spring.springdata.controllers.exceptionhandlers.CustomersNotFoundException;
 import com.codingdays.spring.springdata.entities.CustomerEntity;
 import com.codingdays.spring.springdata.repositories.customer.CustomerEntityRepository;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,6 +53,11 @@ public class CustomerController {
      */
     @RequestMapping(method = RequestMethod.GET, value = "/customer/{Id}")
     public Optional<CustomerEntity> getCustomer(@PathVariable(value = "Id") Long Id) {
+
+        log.info("==================================================");
+        log.info("This is the controller for retrieving a customer by Id");
+        log.info("==================================================");
+
         return repository.findById(Id);
     }
 
@@ -61,6 +69,11 @@ public class CustomerController {
      */
     @RequestMapping(method = RequestMethod.GET, value = "/customer/{firstName}")
     public List<CustomerEntity> getCustomerByFirstName(@PathVariable(value = "firstName") String firstName) {
+
+        log.info("==================================================");
+        log.info("This is the controller for retrieving a customer by name");
+        log.info("==================================================");
+
         return repository.findAllByFirstName(firstName);
     }
 
@@ -69,15 +82,19 @@ public class CustomerController {
      * A customer is saved with its firstname and lastname. The id of a new customer object is
      * automatically generated as specified in the CustomerEntity class.
      *
-     * @param customerDetails: details of customer object as a JSON
+     * @param customerDetails : details of customer object as a JSON
      */
     @PostMapping
     @RequestMapping(method = RequestMethod.POST, value = "/customer/new", consumes = {"application/json",
             "application/x-www-form-urlencoded"}, produces = {"application/x-www-form-urlencoded", "application/json"})
     public String saveCustomer(@RequestBody CustomerEntity customerDetails) {
 
-        repository.save(customerDetails);
+        log.info("==================================================");
+        log.info("This is the controller for posting new customers");
+        log.info("==================================================");
 
-        return customerDetails.toString();
+            repository.save(customerDetails);
+            return customerDetails.toString();
+
     }
 }
