@@ -10,13 +10,6 @@
 - Apply knowledge in some kind of project such as a small online-store backend to store user information, store items, 
 user authentification etc.
 
-# To-do's | 20th January 2019
-
-- Finding the bug in POST request
-- (adding Spring Actuator)
-- think of a simple gui to use for adding and looking for users
-- research how to test spring applications
-
 # Spring Framework
 
 ## Spring Web MVC
@@ -127,9 +120,10 @@ TODO
 TODO
 ### What is MongoDB?
 TODO
-### Applications 
-TODO
 ### Features
+
+### Adv. & Dis.
+TODO
 
 ### Document Structure and working with Collections
 
@@ -200,7 +194,7 @@ Note that the identifier uses the field "first_name" to look for the object. In 
 By using $set, the query is told to keep all previous information of the object and merely changing the attribute that is passed in after the set key-word. 
 
 
-### MongoDB Syntax
+### MongoDB Syntax and some basic functions
 
         // create database
         // also switches directly into dbs
