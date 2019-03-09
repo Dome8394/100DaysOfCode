@@ -1,20 +1,16 @@
 package com.codingdays.spring.springdata.controllers.customers;
 
+import com.codingdays.spring.springdata.business.CustomerBusinessService;
 import com.codingdays.spring.springdata.controllers.exceptionhandlers.CustomersNotFoundException;
 import com.codingdays.spring.springdata.entities.CustomerEntity;
 import com.codingdays.spring.springdata.repositories.customer.CustomerEntityRepository;
-import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.springframework.util.ObjectUtils.isEmpty;
 
 
 @RestController
@@ -23,19 +19,22 @@ public class CustomerController {
 
     private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
 
-    private CustomerEntityRepository repository;
-
     @Autowired
-    public CustomerController(CustomerEntityRepository repository) {
-        this.repository = repository;
-    }
+    private CustomerBusinessService businessService;
+
+    //private CustomerEntityRepository repository;
+
+//    @Autowired
+//    public CustomerController(CustomerEntityRepository repository) {
+//        this.repository = repository;
+//    }
 
 
     /**
      * Returns a list of all customers that are currently saved
      * in the database.
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/customers")
+    /*@RequestMapping(method = RequestMethod.GET, value = "/customers")
     public Iterable<CustomerEntity> getCustomers() throws CustomersNotFoundException {
 
         if (isEmpty(repository.findAll())) {
@@ -43,6 +42,15 @@ public class CustomerController {
         }
 
         return repository.findAll();
+    }*/
+
+    /**
+     * Returns a list of all customers that are currently saved
+     * in the database.
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/customers")
+    public List<CustomerEntity> getCustomers() {
+        return businessService.retrieveAllCustomers();
     }
 
     /**
@@ -58,7 +66,7 @@ public class CustomerController {
         log.info("This is the controller for retrieving a customer by Id");
         log.info("==================================================");
 
-        return repository.findById(Id);
+        return null;
     }
 
 
@@ -74,7 +82,7 @@ public class CustomerController {
         log.info("This is the controller for retrieving a customer by name");
         log.info("==================================================");
 
-        return repository.findAllByFirstName(firstName);
+        return null;
     }
 
     /**
@@ -93,8 +101,7 @@ public class CustomerController {
         log.info("This is the controller for posting new customers");
         log.info("==================================================");
 
-            repository.save(customerDetails);
+            //repository.save(customerDetails);
             return customerDetails.toString();
-
     }
 }

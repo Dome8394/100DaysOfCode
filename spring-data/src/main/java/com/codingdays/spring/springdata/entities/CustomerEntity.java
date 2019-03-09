@@ -3,11 +3,13 @@ package com.codingdays.spring.springdata.entities;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.LinkedList;
+
 @Document(collection = "customers")
 public class CustomerEntity {
 
     @org.springframework.data.annotation.Id
-    private String Id;
+    private int Id;
 
     private String firstName;
     private String lastName;
@@ -15,17 +17,17 @@ public class CustomerEntity {
     public CustomerEntity() {
     }
 
-    public CustomerEntity(String firstName, String lastName, String Id) {
+    public CustomerEntity(String firstName, String lastName, int Id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.Id = Id;
     }
 
-    public String getId() {
+    public int getId() {
         return Id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         Id = id;
     }
 

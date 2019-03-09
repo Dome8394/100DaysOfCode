@@ -13,13 +13,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class SpringDataApplicationTests {
 
-
-	@Autowired
-	public CustomerController controller;
-
 	@Test
 	public void contextLoads() {
-		assertThat(controller).isNotNull();
+
 	}
 
 }

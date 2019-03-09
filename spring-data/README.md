@@ -29,6 +29,10 @@ The DispatcherServlet acts as a Front Controller (see Front Controller pattern a
 which receives incoming HTTP requests and processes them. The processing happens by mapping requests on to relevant controllers
 in assistance of handler mappings.
 
+### SOLID Design Principles
+
+TODO
+
 ### Inversion of Control (IOC) and Dependency Injection (DI)
 
 TODO
@@ -90,7 +94,28 @@ must be provided inside the annotation such as
         }
 
 There can be any number of Pathvariable-annotations inside a <code>@RequestMapping</code>-method. Also, Pathvariables can
-be expressed by Regular Expressions for more complex Pathvariables. jldjJDfafafafa
+be expressed by Regular Expressions for more complex Pathvariables. 
+
+### Testing Spring Boot Applications
+
+**Dependencies for Testing**
+
+<li>Hamcrest</li>
+<li>JUnit</li>
+<li>Mockito</li>
+<li>Jackson</li>
+<li>MockMVC</li>
+<li>SpringTest</li>
+
+#### Testing the Web layer
+
+MockMVC class is main entry point for testing controllers. Request can be sent to controllers by calling
+MockMVCs *perform(RequestBuilder requestBuilder)* method. Write assertions for the retrieved response with 
+static methods of *MockMVCResultMatchers* class.
+
+#### Testing the Service layer
+
+TODO
 
 # Java Persistance API
 =======
