@@ -9,7 +9,7 @@ import java.util.LinkedList;
 public class CustomerEntity {
 
     @org.springframework.data.annotation.Id
-    private int Id;
+    private long Id;
 
     private String firstName;
     private String lastName;
@@ -17,17 +17,17 @@ public class CustomerEntity {
     public CustomerEntity() {
     }
 
-    public CustomerEntity(String firstName, String lastName, int Id) {
+    public CustomerEntity(String firstName, String lastName, long Id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.Id = Id;
     }
 
-    public int getId() {
+    public long getId() {
         return Id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         Id = id;
     }
 

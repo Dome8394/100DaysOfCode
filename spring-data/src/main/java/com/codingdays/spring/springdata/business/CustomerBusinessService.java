@@ -4,8 +4,10 @@ import com.codingdays.spring.springdata.entities.CustomerEntity;
 import com.codingdays.spring.springdata.repositories.customer.CustomerEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author dominik on 08.03.19
@@ -23,5 +25,13 @@ public class CustomerBusinessService {
      */
     public List<CustomerEntity> retrieveAllCustomers() {
         return repository.findAll();
+    }
+
+    public Optional<CustomerEntity> retrieveCustomerById(long id) {
+        return repository.findById(id);
+    }
+
+    public List<CustomerEntity> retrieveCustomerByFirstName(@PathVariable(value = "firstName") String firstName) {
+        return repository.findAllByFirstName(firstName);
     }
 }

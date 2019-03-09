@@ -1,4 +1,4 @@
-package com.codingdays.spring.springdata;
+package com.codingdays.spring.springdata.business;
 
 import com.codingdays.spring.springdata.business.CustomerBusinessService;
 import com.codingdays.spring.springdata.entities.CustomerEntity;
@@ -11,8 +11,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 /**
@@ -40,6 +43,19 @@ public class CustomerBusinessServiceTest {
         assertEquals("Will", items.get(0).getFirstName()); // true
         assertEquals("Smith", items.get(0).getLastName()); // true
         assertEquals(1, items.get(0).getId()); // true
+    }
 
+    @Test
+    public void retrieveSingleCustomerById_basic() {
+        when(repository.findById((long) 22.0)).thenReturn(
+                Optional.of(new CustomerEntity("Will", "Petigrew", 22))
+        );
+
+        Optional<CustomerEntity> entity = businessService.retrieveCustomerById(22);
+        Optional<CustomerEntity> falseEntity = businessService.retrieveCustomerById(23);
+
+        assertTrue(entity.isPresent());
+        assertFalse(falseEntity.isPresent()); // should return true
+        assertEquals("Will", entity.get().getFirstName());
     }
 }

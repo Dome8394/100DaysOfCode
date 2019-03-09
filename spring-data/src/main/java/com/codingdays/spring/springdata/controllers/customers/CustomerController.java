@@ -59,7 +59,7 @@ public class CustomerController {
      *
      * @param Id: customer ID
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/customer/{Id}")
+    /*@RequestMapping(method = RequestMethod.GET, value = "/customer/{Id}")
     public Optional<CustomerEntity> getCustomer(@PathVariable(value = "Id") Long Id) {
 
         log.info("==================================================");
@@ -67,6 +67,18 @@ public class CustomerController {
         log.info("==================================================");
 
         return null;
+    }*/
+
+    /**
+     * Returns a single customer that is found by its Id provided.
+     * The id is passed as a Request parameter within the URI
+     *
+     * @param Id: customer ID
+     * @return CustomerEntity
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/customer/{Id")
+    public Optional<CustomerEntity> getCustomerById(@PathVariable(value = "Id") Long Id) {
+        return businessService.retrieveCustomerById(Id);
     }
 
 
@@ -75,7 +87,7 @@ public class CustomerController {
      * @param firstName: name of the customer
      * @return List of customers
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/customer/{firstName}")
+    /*@RequestMapping(method = RequestMethod.GET, value = "/customer/{firstName}")
     public List<CustomerEntity> getCustomerByFirstName(@PathVariable(value = "firstName") String firstName) {
 
         log.info("==================================================");
@@ -83,6 +95,16 @@ public class CustomerController {
         log.info("==================================================");
 
         return null;
+    }*/
+
+    /**
+     * Returns a list of customers found with a given firstName
+     * @param firstName: name of the customer
+     * @return List of customers
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/customer/{firstName}")
+    public List<CustomerEntity> getCustomerByFirstName(@PathVariable(value = "firstName") String firstName) {
+        return businessService.retrieveCustomerByFirstName(firstName);
     }
 
     /**

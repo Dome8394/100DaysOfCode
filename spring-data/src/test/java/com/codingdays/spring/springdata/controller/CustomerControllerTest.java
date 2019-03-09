@@ -1,4 +1,4 @@
-package com.codingdays.spring.springdata;
+package com.codingdays.spring.springdata.controller;
 
 import com.codingdays.spring.springdata.business.CustomerBusinessService;
 import com.codingdays.spring.springdata.controllers.customers.CustomerController;
