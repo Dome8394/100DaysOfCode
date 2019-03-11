@@ -3,6 +3,7 @@ package com.codingdays.spring.springdata.controller;
 import com.codingdays.spring.springdata.business.CustomerBusinessService;
 import com.codingdays.spring.springdata.controllers.customers.CustomerController;
 import com.codingdays.spring.springdata.entities.CustomerEntity;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -30,6 +31,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CustomerControllerTest {
 
     private String expected = "[{\"firstName\": Will, \"lastName\": \"Smith\", \"id\": 1}]";
+    private String expectedMultipleCustomers = "[{\"firstName\": Will, \"lastName\": \"Smith\", \"id\": 1}," +
+            "{\"firstName\": Peter, \"lastName\": \"Petigrew\", \"id\": 2}," +
+            "{\"firstName\": Sam, \"lastName\": \"Crow\", \"id\": 3}]";
+    private String expectedNull = "[{\"firstName\": null, \"lastName\": null, \"id\": 0}]";
+
 
     @Autowired
     MockMvc mock;
@@ -37,8 +43,13 @@ public class CustomerControllerTest {
     @MockBean
     private CustomerBusinessService businessService;
 
+    /**
+     * Testing if getCustomers controller responds with correct JSON.
+     *
+     * @throws Exception
+     */
     @Test
-    public void getCustomers() throws Exception {
+    public void getCustomers_basic() throws Exception {
 
         when(businessService.retrieveAllCustomers()).thenReturn(
                 Arrays.asList(new CustomerEntity("Will", "Smith", 1))
@@ -50,13 +61,52 @@ public class CustomerControllerTest {
 
         MvcResult result = mock.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(content().json( "[{firstName: Will, lastName: Smith, id: 1}]"))
+                .andExpect(content().json("[{firstName: Will, lastName: Smith, id: 1}]"))
                 .andReturn();
 
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
-
     }
 
+    @Test
+    public void getCustomers_multipleCustomers_basic() throws Exception {
+
+        when(businessService.retrieveAllCustomers()).thenReturn(
+                Arrays.asList(new CustomerEntity("Will", "Smith", 1),
+                        new CustomerEntity("Peter", "Petigrew", 2),
+                        new CustomerEntity("Sam", "Crow", 3))
+        );
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/api/customers")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mock.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().json("[{firstName: Will, lastName: Smith, id: 1}," +
+                        "{firstName: Peter, lastName: Petigrew, id: 2}, " +
+                        "{firstName: Sam, lastName: Crow, id: 3}]"))
+                .andReturn();
+
+        JSONAssert.assertEquals(expectedMultipleCustomers, result.getResponse().getContentAsString(), false);
+    }
+
+    @Test
+    public void getCustomers_multipleCustomers_nullCustomer() throws Exception {
+        when(businessService.retrieveAllCustomers()).thenReturn(
+                Arrays.asList(new CustomerEntity())
+        );
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/api/customers")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mock.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().json("[{}]"))
+                .andReturn();
+
+        JSONAssert.assertEquals(expectedNull, result.getResponse().getContentAsString(), false);
+    }
 
 
 }

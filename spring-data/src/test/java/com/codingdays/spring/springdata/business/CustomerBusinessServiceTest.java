@@ -31,6 +31,10 @@ public class CustomerBusinessServiceTest {
     @Mock
     private CustomerEntityRepository repository;
 
+    /**
+     * Testing if findAll is accessed by controller and thus
+     * web layer correctly communicating with business layer.
+     */
     @Test
     public void retrieveAllCustomers_basic() {
 
@@ -45,6 +49,10 @@ public class CustomerBusinessServiceTest {
         assertEquals(1, items.get(0).getId()); // true
     }
 
+    /**
+     * Testing if findById is accessed by controller and thus
+     * web layer correctly communicating with business layer.
+     */
     @Test
     public void retrieveSingleCustomerById_basic() {
         when(repository.findById((long) 22.0)).thenReturn(

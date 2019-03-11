@@ -22,27 +22,6 @@ public class CustomerController {
     @Autowired
     private CustomerBusinessService businessService;
 
-    //private CustomerEntityRepository repository;
-
-//    @Autowired
-//    public CustomerController(CustomerEntityRepository repository) {
-//        this.repository = repository;
-//    }
-
-
-    /**
-     * Returns a list of all customers that are currently saved
-     * in the database.
-     */
-    /*@RequestMapping(method = RequestMethod.GET, value = "/customers")
-    public Iterable<CustomerEntity> getCustomers() throws CustomersNotFoundException {
-
-        if (isEmpty(repository.findAll())) {
-            throw new CustomersNotFoundException();
-        }
-
-        return repository.findAll();
-    }*/
 
     /**
      * Returns a list of all customers that are currently saved
@@ -58,44 +37,12 @@ public class CustomerController {
      * The id is passed as a Request parameter within the URI
      *
      * @param Id: customer ID
-     */
-    /*@RequestMapping(method = RequestMethod.GET, value = "/customer/{Id}")
-    public Optional<CustomerEntity> getCustomer(@PathVariable(value = "Id") Long Id) {
-
-        log.info("==================================================");
-        log.info("This is the controller for retrieving a customer by Id");
-        log.info("==================================================");
-
-        return null;
-    }*/
-
-    /**
-     * Returns a single customer that is found by its Id provided.
-     * The id is passed as a Request parameter within the URI
-     *
-     * @param Id: customer ID
      * @return CustomerEntity
      */
     @RequestMapping(method = RequestMethod.GET, value = "/customer/{Id")
     public Optional<CustomerEntity> getCustomerById(@PathVariable(value = "Id") Long Id) {
         return businessService.retrieveCustomerById(Id);
     }
-
-
-    /**
-     * Returns a list of customers found with a given firstName
-     * @param firstName: name of the customer
-     * @return List of customers
-     */
-    /*@RequestMapping(method = RequestMethod.GET, value = "/customer/{firstName}")
-    public List<CustomerEntity> getCustomerByFirstName(@PathVariable(value = "firstName") String firstName) {
-
-        log.info("==================================================");
-        log.info("This is the controller for retrieving a customer by name");
-        log.info("==================================================");
-
-        return null;
-    }*/
 
     /**
      * Returns a list of customers found with a given firstName
@@ -117,13 +64,7 @@ public class CustomerController {
     @PostMapping
     @RequestMapping(method = RequestMethod.POST, value = "/customer/new", consumes = {"application/json",
             "application/x-www-form-urlencoded"}, produces = {"application/x-www-form-urlencoded", "application/json"})
-    public String saveCustomer(@RequestBody CustomerEntity customerDetails) {
-
-        log.info("==================================================");
-        log.info("This is the controller for posting new customers");
-        log.info("==================================================");
-
-            //repository.save(customerDetails);
-            return customerDetails.toString();
+    public void saveCustomer(@RequestBody CustomerEntity customerDetails) {
+         businessService.saveCustomer(customerDetails);
     }
 }

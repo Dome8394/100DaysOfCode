@@ -3,6 +3,7 @@ package com.codingdays.spring.springdata.business;
 import com.codingdays.spring.springdata.entities.CustomerEntity;
 import com.codingdays.spring.springdata.repositories.customer.CustomerEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -33,5 +34,16 @@ public class CustomerBusinessService {
 
     public List<CustomerEntity> retrieveCustomerByFirstName(@PathVariable(value = "firstName") String firstName) {
         return repository.findAllByFirstName(firstName);
+    }
+
+    public String saveCustomer(CustomerEntity customerEntity) {
+
+        // first check if customer is already saved in db
+        if(repository.exists(Example.of(customerEntity))) {
+            return customerEntity.toString();
+        } else {
+            repository.save(customerEntity);
+            return customerEntity.toString();
+        }
     }
 }
