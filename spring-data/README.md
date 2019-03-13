@@ -12,13 +12,13 @@ user authentification etc.
 
 # Java 
 
-## Differences between JVM, JDK and JRE
+## **Differences between JVM, JDK and JRE**
 
 JVM stand for Java Virtual Machine and is the underlying process running on a computer. The JVM
 is responsible for executing programs. The JRE or Java Runtime Environment creates the JVM. 
 The JDK or Java Development Kit lets you develop your Java applications.
 
-## Memory Management in Java
+## **Memory Management in Java**
 
 Pre Java, each developer was responsible for taking care of memory management. Java comes with a 
 built-in process called *Garbage Collection*. The Garbage Collection takes care of 
@@ -37,7 +37,7 @@ A software program implements the JVM specification. There exist a lot of JVM im
 
 Downloaded program is an instance or instantiated version of the JVM. When developers talk about the JVM, it is referred to the JVM instance running in a software development or production environment. 
 
-## Loading and Executing class files in the JVM
+## **Loading and Executing class files in the JVM**
 
 In order for the JVM to execute Java applications, it relies on the Java class loader and the Java execution engine.
 
@@ -52,7 +52,7 @@ The JVM is responsible for allocating and maintaining the referential structure 
 
 # Spring Framework
 
-## Spring Web MVC
+## **Spring Web MVC**
 
 The Spring Web MVC Framework is build around the DispatcherServlet which is responsible for dispatching of requests 
 onto specific controllers. The framework makes the development of Web Application easier by reducing the amount of boilerplate
@@ -129,22 +129,74 @@ must be provided inside the annotation such as
 There can be any number of Pathvariable-annotations inside a <code>@RequestMapping</code>-method. Also, Pathvariables can
 be expressed by Regular Expressions for more complex Pathvariables. 
 
-### Testing Spring Boot Applications
+# Testing Spring Boot Applications
 
-**Dependencies for Testing**
+Testing Spring Boot applications comes down to three different kind of test *layers*:
 
-<li>Hamcrest</li>
-<li>JUnit</li>
-<li>Mockito</li>
-<li>Jackson</li>
-<li>MockMVC</li>
-<li>SpringTest</li>
+- Web or Controller layer
+- Business or Service layer 
+- Data layer
 
-#### Testing the Web layer
+On top of that there are integration tests that make use of the collaboration of multiple layers. 
+Testing each layer can be described as testing the workflow of your application. 
+
+## **Testing the Web layer**
+
+Consider the following RestController:
+
+        @RestController
+        public class CustomerController {
+            
+            @RequestMapping(value = "/hello", method = RequestMethod.GET)
+            public String helloWorld() {
+                    businessService.sayHello();
+            }
+        }
+        
+
+If you would like to test this controller you will be testing the web layer of your application.
+A unit test for this controller will test if the value returned from this controller, does 
+match the expected value. A unit test for this controller could look like this:
+
+        @RunWith(SpringRunner.class)
+        @WebMvcTest(CustomerController.class)
+        public class ControllerTest {
+
+            @Autowired
+            MockMvc mock;
+            
+            @MockBean
+            BusinessService businessService;
+        
+            @Test
+            public void helloWorldTest_basic() {
+            
+                when(businessService.sayHello()).thenReturn(
+                    new String("Hello World!")
+                );
+
+                RequestBuilder request = MockMvcRequestBuilders
+                        .get("/hello")
+
+                MvcResult result = mock.perform(request)
+                        .andExpect(status().isOk())
+                        .andReturn();
+                
+                assertEquals(result.getResponse(), "Hello World!");
+            }
+        }     
+
+The businessService is marked as a mock Bean, whereas the MockMvc object is used to execute
+requests. The when function can be used to mock a function call to one of the functions provided by
+the businessService class. With the RequestBuilder class an individual request can be build. There is a 
+RequestBuilder for each HTTP requests such as GET, PUT, POST, DELETE, ...
+The MvcResult class is used to get the response from the request. 
+
 
 MockMVC class is main entry point for testing controllers. Request can be sent to controllers by calling
 MockMVCs *perform(RequestBuilder requestBuilder)* method. Write assertions for the retrieved response with 
 static methods of *MockMVCResultMatchers* class.
+
 
 #### Testing the Service layer
 
