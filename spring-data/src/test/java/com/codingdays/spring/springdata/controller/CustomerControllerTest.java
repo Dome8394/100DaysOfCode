@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.Request;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -49,7 +50,8 @@ public class CustomerControllerTest {
     private CustomerBusinessService businessService;
 
     /**
-     * Testing if getCustomers controller responds with correct JSON.
+     * Asserting if retrieveAllCustomers is called propriately by the CustomerController.
+     * The method should return the expected JSON object as defined in the when clause.
      *
      * @throws Exception
      */
@@ -72,6 +74,12 @@ public class CustomerControllerTest {
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
     }
 
+    /**
+     * Asserting if getCustomers also returns multiple JSON objects defined as a
+     * JSONArray.
+     *
+     * @throws Exception
+     */
     @Test
     public void getCustomers_multipleCustomers_basic() throws Exception {
 
@@ -95,6 +103,11 @@ public class CustomerControllerTest {
         JSONAssert.assertEquals(expectedMultipleCustomers, result.getResponse().getContentAsString(), false);
     }
 
+    /**
+     * Asserting if an empty JSON object is also returned by the CustomerController.
+     *
+     * @throws Exception
+     */
     @Test
     public void getCustomers_multipleCustomers_nullCustomer() throws Exception {
         when(businessService.retrieveAllCustomers()).thenReturn(
@@ -114,14 +127,40 @@ public class CustomerControllerTest {
     }
 
     /**
-     * Testing post method
+     * Asserting if a single customer is returned by the appropriate controller's method.
+     */
+    @Test
+    public void getCustomerByFirstName_basic() throws Exception {
+
+        JSONObject name = new JSONObject("firstName: Will");
+
+        when(businessService.retrieveCustomerByFirstName("Will")).thenReturn(
+                Arrays.asList(new CustomerEntity("Will", "Smith", 1),
+                        new CustomerEntity("Peter", "Petigrew", 2),
+                        new CustomerEntity("Sam", "Crow", 3))
+        );
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/customer/{firstName}", name)
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mock.perform(request)
+                .andExpect(content().json("[{firstName: Will, lastName: Smith, id: 1}]"))
+                .andReturn();
+    }
+
+
+    /**
+     * Asserting if the controller's post method accepts the data content of the HTTP post request.
+     * The method should return a HTTP Status 200 (OK).
+     *
      * @throws Exception
      */
     @Test
     public void saveCustomerTest_basic() throws Exception {
 
         CustomerEntity customerEntity = new CustomerEntity("Will", "Smith", 1);
-        JSONArray jsonObject = new JSONArray("[{\"firstName\": Will, \"lastName\": \"Smith\", \"id\": 1}]");
+        JSONObject jsonObject = new JSONObject("{\"firstName\": Will, \"lastName\": \"Smith\", \"id\": 1}");
 
         when(businessService.saveCustomer(Mockito.any(CustomerEntity.class))).thenReturn(
                 customerEntity.toString()
@@ -129,14 +168,16 @@ public class CustomerControllerTest {
 
         RequestBuilder request = MockMvcRequestBuilders
                 .post("/api/customer/new")
-                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonObject.toString());
 
         MvcResult result = mock.perform(request)
-                .andExpect(status().isCreated())
                 .andReturn();
 
-        assertEquals(HttpStatus.CREATED.value(), result.getResponse().getStatus());
+        assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
+
+
     }
 
 

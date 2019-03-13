@@ -10,6 +10,46 @@
 - Apply knowledge in some kind of project such as a small online-store backend to store user information, store items, 
 user authentification etc.
 
+# Java 
+
+## Differences between JVM, JDK and JRE
+
+JVM stand for Java Virtual Machine and is the underlying process running on a computer. The JVM
+is responsible for executing programs. The JRE or Java Runtime Environment creates the JVM. 
+The JDK or Java Development Kit lets you develop your Java applications.
+
+## Memory Management in Java
+
+Pre Java, each developer was responsible for taking care of memory management. Java comes with a 
+built-in process called *Garbage Collection*. The Garbage Collection takes care of 
+the Memory Management by identifying unused memory and de-allocating it, thus making
+the memory usable again. Garbage Collection happens inside the JVM. 
+
+### JVM Specification
+
+The JVM is a *Virtual Machine* that runs Java class files in a portable way. Being a VM, the JVM is an abstraction of an underlying, actual machine. Unlike a *true* VM, the JVM does not create a virtual operating system. More accurate the JVM is a *managed runtime environment* or a *process virtual machine*.
+
+### JVM implementations
+
+A software program implements the JVM specification. There exist a lot of JVM implementations such as OpenJDK's HotSpotJVM
+
+### JVM Instance
+
+Downloaded program is an instance or instantiated version of the JVM. When developers talk about the JVM, it is referred to the JVM instance running in a software development or production environment. 
+
+## Loading and Executing class files in the JVM
+
+In order for the JVM to execute Java applications, it relies on the Java class loader and the Java execution engine.
+
+### Java class loader
+
+In order to run a Java application, a JVM must load compiled *.class* files into a context, such as a server, where they can be accessed. The Java class loader is the part the JVM that loads classes into memory and makes them available for execution. Class loader mechanism are a black box.
+
+### Java execution engine
+
+The JVM is responsible for allocating and maintaining the referential structure (turning keywords such as *new* operator to OS-specific requests for memory allocation).
+
+
 # Spring Framework
 
 ## Spring Web MVC

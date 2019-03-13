@@ -17,8 +17,6 @@ import java.util.Optional;
 @RequestMapping(value = "/api")
 public class CustomerController {
 
-    private static final Logger log = LoggerFactory.getLogger(CustomerController.class);
-
     @Autowired
     private CustomerBusinessService businessService;
 
@@ -39,7 +37,7 @@ public class CustomerController {
      * @param Id: customer ID
      * @return CustomerEntity
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/customer/{Id")
+    @RequestMapping(method = RequestMethod.GET, value = "/customer/{Id}")
     public Optional<CustomerEntity> getCustomerById(@PathVariable(value = "Id") Long Id) {
         return businessService.retrieveCustomerById(Id);
     }
