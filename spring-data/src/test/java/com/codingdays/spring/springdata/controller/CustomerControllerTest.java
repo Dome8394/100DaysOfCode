@@ -27,6 +27,7 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -132,20 +133,21 @@ public class CustomerControllerTest {
     @Test
     public void getCustomerByFirstName_basic() throws Exception {
 
-        JSONObject name = new JSONObject("firstName: Will");
+        JSONObject name = new JSONObject("{\"firstName\": Will}");
 
         when(businessService.retrieveCustomerByFirstName("Will")).thenReturn(
-                Arrays.asList(new CustomerEntity("Will", "Smith", 1),
-                        new CustomerEntity("Peter", "Petigrew", 2),
-                        new CustomerEntity("Sam", "Crow", 3))
+                Arrays.asList(new CustomerEntity("Will", "Smith", 0))
         );
 
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/customer/{firstName}", name)
+                .get("/customer/{firstName}", "Will")
+                .param("firstName", "Will")
+                .param("lastName", "Smith")
+                .param("id", "0")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mock.perform(request)
-                .andExpect(content().json("[{firstName: Will, lastName: Smith, id: 1}]"))
+                .andExpect(status().isOk())
                 .andReturn();
     }
 
