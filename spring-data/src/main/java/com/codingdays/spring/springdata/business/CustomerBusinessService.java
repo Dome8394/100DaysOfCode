@@ -2,11 +2,12 @@ package com.codingdays.spring.springdata.business;
 
 import com.codingdays.spring.springdata.entities.CustomerEntity;
 import com.codingdays.spring.springdata.repositories.customer.CustomerEntityRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,14 +29,29 @@ public class CustomerBusinessService {
         return repository.findAll();
     }
 
-    public Optional<CustomerEntity> retrieveCustomerById(long id) {
-        return repository.findById(id);
+    /**
+     * To be done
+     * @param _id
+     * @return
+     */
+    public Optional<CustomerEntity> retrieveCustomerById(ObjectId _id) {
+        return repository.findById(_id);
     }
 
-    public List<CustomerEntity> retrieveCustomerByFirstName(@PathVariable(value = "firstName") String firstName) {
+    /**
+     * To be done
+     * @param firstName
+     * @return
+     */
+    public List<CustomerEntity> retrieveCustomerByFirstName(String firstName) {
         return repository.findAllByFirstName(firstName);
     }
 
+    /**
+     * To be done
+     * @param customerEntity
+     * @return
+     */
     public String saveCustomer(CustomerEntity customerEntity) {
 
         // first check if customer is already saved in db

@@ -3,6 +3,7 @@ package com.codingdays.spring.springdata.controller;
 import com.codingdays.spring.springdata.business.CustomerBusinessService;
 import com.codingdays.spring.springdata.controllers.customers.CustomerController;
 import com.codingdays.spring.springdata.entities.CustomerEntity;
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -22,10 +23,12 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,10 +40,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(CustomerController.class)
 public class CustomerControllerTest {
 
-    private String expected = "[{\"firstName\": Will, \"lastName\": \"Smith\", \"id\": 1}]";
-    private String expectedMultipleCustomers = "[{\"firstName\": Will, \"lastName\": \"Smith\", \"id\": 1}," +
-            "{\"firstName\": Peter, \"lastName\": \"Petigrew\", \"id\": 2}," +
-            "{\"firstName\": Sam, \"lastName\": \"Crow\", \"id\": 3}]";
+    private String expected = "[{\"firstName\": Will, \"lastName\": \"Smith\", \"id\": 5399aba6e4b0ae375bfdca88}]";
+    private String expectedMultipleCustomers = "[{\"firstName\": Will, \"lastName\": \"Smith\", \"id\": 5399aba6e4b0ae375bfdca88}," +
+            "{\"firstName\": Peter, \"lastName\": \"Petigrew\", \"id\": 5399aba6e4b0ae375bfdca89}," +
+            "{\"firstName\": Sam, \"lastName\": \"Crow\", \"id\": 5399aba6e4b0ae375bfdca90}]";
     private String expectedNull = "[{\"firstName\": null, \"lastName\": null, \"id\": 0}]";
 
 
@@ -60,7 +63,7 @@ public class CustomerControllerTest {
     public void getCustomers_basic() throws Exception {
 
         when(businessService.retrieveAllCustomers()).thenReturn(
-                Arrays.asList(new CustomerEntity("Will", "Smith", 1))
+                Arrays.asList(new CustomerEntity("Will", "Smith", new ObjectId()))
         );
 
         RequestBuilder request = MockMvcRequestBuilders
@@ -69,7 +72,7 @@ public class CustomerControllerTest {
 
         MvcResult result = mock.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(content().json("[{firstName: Will, lastName: Smith, id: 1}]"))
+                .andExpect(content().json("[{firstName: Will, lastName: Smith, id: 5399aba6e4b0ae375bfdca88}]"))
                 .andReturn();
 
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
@@ -85,9 +88,9 @@ public class CustomerControllerTest {
     public void getCustomers_multipleCustomers_basic() throws Exception {
 
         when(businessService.retrieveAllCustomers()).thenReturn(
-                Arrays.asList(new CustomerEntity("Will", "Smith", 1),
-                        new CustomerEntity("Peter", "Petigrew", 2),
-                        new CustomerEntity("Sam", "Crow", 3))
+                Arrays.asList(new CustomerEntity("Will", "Smith", new ObjectId("5399aba6e4b0ae375bfdca88")),
+                        new CustomerEntity("Peter", "Petigrew", new ObjectId("25399aba6e4b0ae375bfdca89")),
+                        new CustomerEntity("Sam", "Crow", new ObjectId("5399aba6e4b0ae375bfdca90")))
         );
 
         RequestBuilder request = MockMvcRequestBuilders
@@ -96,9 +99,9 @@ public class CustomerControllerTest {
 
         MvcResult result = mock.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(content().json("[{firstName: Will, lastName: Smith, id: 1}," +
-                        "{firstName: Peter, lastName: Petigrew, id: 2}, " +
-                        "{firstName: Sam, lastName: Crow, id: 3}]"))
+                .andExpect(content().json("[{firstName: Will, lastName: Smith, id: 5399aba6e4b0ae375bfdca88}," +
+                        "{firstName: Peter, lastName: Petigrew, id: 5399aba6e4b0ae375bfdca89}, " +
+                        "{firstName: Sam, lastName: Crow, id: 5399aba6e4b0ae375bfdca90}]"))
                 .andReturn();
 
         JSONAssert.assertEquals(expectedMultipleCustomers, result.getResponse().getContentAsString(), false);
@@ -134,21 +137,23 @@ public class CustomerControllerTest {
     public void getCustomerByFirstName_basic() throws Exception {
 
         JSONObject name = new JSONObject("{\"firstName\": Will}");
+        String firstName = "Will";
 
-        when(businessService.retrieveCustomerByFirstName("Will")).thenReturn(
-                Arrays.asList(new CustomerEntity("Will", "Smith", 0))
-        );
+        when(businessService.retrieveCustomerByFirstName(firstName)).thenReturn(
+                Arrays.asList(
+                        new CustomerEntity("Will", "Smith", new ObjectId("5399aba6e4b0ae375bfdca88"))));
 
         RequestBuilder request = MockMvcRequestBuilders
                 .get("/customer/{firstName}", "Will")
-                .param("firstName", "Will")
-                .param("lastName", "Smith")
-                .param("id", "0")
+                //.param("firstName", firstName)
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mock.perform(request)
                 .andExpect(status().isOk())
+                .andExpect(content().json("[{firstName: Will, lastName: Smith, id: 5399aba6e4b0ae375bfdca88}"))
                 .andReturn();
+
+        //JSONAssert.assertEquals(expectedMultipleCustomers, result.getResponse().getContentAsString(), false);
     }
 
 
@@ -161,8 +166,8 @@ public class CustomerControllerTest {
     @Test
     public void saveCustomerTest_basic() throws Exception {
 
-        CustomerEntity customerEntity = new CustomerEntity("Will", "Smith", 1);
-        JSONObject jsonObject = new JSONObject("{\"firstName\": Will, \"lastName\": \"Smith\", \"id\": 1}");
+        CustomerEntity customerEntity = new CustomerEntity("Will", "Smith", new ObjectId("5399aba6e4b0ae375bfdca88"));
+        JSONObject jsonObject = new JSONObject("{\"firstName\": Will, \"lastName\": \"Smith\", \"id\": 5399aba6e4b0ae375bfdca88}");
 
         when(businessService.saveCustomer(Mockito.any(CustomerEntity.class))).thenReturn(
                 customerEntity.toString()

@@ -1,14 +1,12 @@
 package com.codingdays.spring.springdata.controllers.customers;
 
 import com.codingdays.spring.springdata.business.CustomerBusinessService;
-import com.codingdays.spring.springdata.controllers.exceptionhandlers.CustomersNotFoundException;
 import com.codingdays.spring.springdata.entities.CustomerEntity;
-import com.codingdays.spring.springdata.repositories.customer.CustomerEntityRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,12 +32,12 @@ public class CustomerController {
      * Returns a single customer that is found by its Id provided.
      * The id is passed as a Request parameter within the URI
      *
-     * @param Id: customer ID
+     * @param _id: customer ID
      * @return CustomerEntity
      */
     @RequestMapping(method = RequestMethod.GET, value = "/customer/{Id}")
-    public Optional<CustomerEntity> getCustomerById(@PathVariable(value = "Id") Long Id) {
-        return businessService.retrieveCustomerById(Id);
+    public Optional<CustomerEntity> getCustomerById(@PathVariable(value = "Id") ObjectId _id) {
+        return businessService.retrieveCustomerById(_id);
     }
 
     /**
@@ -48,7 +46,7 @@ public class CustomerController {
      * @return List of customers
      */
     @RequestMapping(method = RequestMethod.GET, value = "/customer/{firstName}")
-    public List<CustomerEntity> getCustomerByFirstName(@PathVariable(value = "firstName") String firstName) {
+    public List<CustomerEntity> getCustomerByFirstName(@PathVariable String firstName) {
         return businessService.retrieveCustomerByFirstName(firstName);
     }
 

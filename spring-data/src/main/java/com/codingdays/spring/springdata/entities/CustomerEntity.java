@@ -3,13 +3,14 @@ package com.codingdays.spring.springdata.entities;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigInteger;
 import java.util.LinkedList;
 
 @Document(collection = "customers")
 public class CustomerEntity {
 
     @org.springframework.data.annotation.Id
-    private long Id;
+    private ObjectId _id;
 
     private String firstName;
     private String lastName;
@@ -17,18 +18,18 @@ public class CustomerEntity {
     public CustomerEntity() {
     }
 
-    public CustomerEntity(String firstName, String lastName, long Id) {
+    public CustomerEntity(String firstName, String lastName, ObjectId _id) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.Id = Id;
+        this._id = _id;
     }
 
-    public long getId() {
-        return Id;
+    public ObjectId getId() {
+        return _id;
     }
 
-    public void setId(long id) {
-        Id = id;
+    public void setId(ObjectId id) {
+        _id = _id;
     }
 
     public String getFirstName() {
@@ -51,6 +52,6 @@ public class CustomerEntity {
     @Override
     public String toString() {
         return String.format("Customer[Id = %s, firstName = '%s', lastName = '%s']",
-                Id, firstName, lastName);
+                _id, firstName, lastName);
     }
 }
