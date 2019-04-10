@@ -34,7 +34,7 @@ public class CustomerBusinessService {
      * @param _id
      * @return
      */
-    public Optional<CustomerEntity> retrieveCustomerById(ObjectId _id) {
+    public Optional<CustomerEntity> retrieveCustomerById(String _id) {
         return repository.findById(_id);
     }
 

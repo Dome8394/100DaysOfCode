@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.math.BigInteger;
 import java.util.List;
 
-public interface CustomerEntityRepository extends MongoRepository<CustomerEntity, ObjectId> {
+public interface CustomerEntityRepository extends MongoRepository<CustomerEntity, String> {
 
     List<CustomerEntity> findAllByFirstName(String firstName);
 

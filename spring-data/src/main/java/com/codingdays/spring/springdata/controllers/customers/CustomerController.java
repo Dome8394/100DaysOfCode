@@ -36,7 +36,7 @@ public class CustomerController {
      * @return CustomerEntity
      */
     @RequestMapping(method = RequestMethod.GET, value = "/customer/{Id}")
-    public Optional<CustomerEntity> getCustomerById(@PathVariable(value = "Id") ObjectId _id) {
+    public Optional<CustomerEntity> getCustomerById(@PathVariable(value = "Id") String _id) {
         return businessService.retrieveCustomerById(_id);
     }
 
