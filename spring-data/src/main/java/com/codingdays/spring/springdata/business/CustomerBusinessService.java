@@ -31,20 +31,11 @@ public class CustomerBusinessService {
 
     /**
      * To be done
-     * @param _id
+     * @param Id
      * @return
      */
-    public Optional<CustomerEntity> retrieveCustomerById(String _id) {
-        return repository.findById(_id);
-    }
-
-    /**
-     * To be done
-     * @param firstName
-     * @return
-     */
-    public List<CustomerEntity> retrieveCustomerByFirstName(String firstName) {
-        return repository.findAllByFirstName(firstName);
+    public Optional<CustomerEntity> retrieveCustomerById(String Id) {
+        return repository.findById(Id);
     }
 
     /**
@@ -56,7 +47,7 @@ public class CustomerBusinessService {
 
         // first check if customer is already saved in db
         if(repository.exists(Example.of(customerEntity))) {
-            return customerEntity.toString();
+            return "The customer " + customerEntity.toString() + " is already registered!";
         } else {
             repository.save(customerEntity);
             return customerEntity.toString();

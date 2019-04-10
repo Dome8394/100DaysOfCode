@@ -3,6 +3,7 @@ package com.codingdays.spring.springdata.entities;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.annotation.Generated;
 import java.math.BigInteger;
 import java.util.LinkedList;
 
