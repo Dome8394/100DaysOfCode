@@ -17,5 +17,5 @@ public interface IProduct {
      * Returns a single product.
      * @return Product
      */
-    public Optional<Product> getProduct(String id);
+    public Optional<Product> getProduct(int id);
 }

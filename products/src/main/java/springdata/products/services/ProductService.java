@@ -20,7 +20,7 @@ public class ProductService implements IProduct {
         return repository.findAll();
     }
 
-    public Optional<Product> getProduct(String id) {
+    public Optional<Product> getProduct(int id) {
         return repository.findById(id);
     }
 }
