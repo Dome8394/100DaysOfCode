@@ -4,29 +4,31 @@ import org.springframework.data.annotation.Id;
 
 /**
  * Product class
- * @author: Dominik Kesim
- * @date: 28.04.19
+ * @author  Dominik Kesim
+ * @date 28.04.19
  */
 public class Product {
 
     @Id
-    private String id;
+    private int id;
     private String name;
     private double price;
+    private int quantity;
 
     public Product() { }
 
-    public Product(String id, String name, double price) {
+    public Product(int id, String name, double price, int quantity) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.quantity = quantity;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -53,8 +55,6 @@ public class Product {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
-    private int quantity;
 
     @Override
     public String toString() {
