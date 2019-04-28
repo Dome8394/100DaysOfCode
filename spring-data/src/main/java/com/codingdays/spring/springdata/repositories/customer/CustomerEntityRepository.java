@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface CustomerEntityRepository extends MongoRepository<CustomerEntity, String> {
+public interface CustomerEntityRepository extends MongoRepository<CustomerEntity, Integer> {
 }
