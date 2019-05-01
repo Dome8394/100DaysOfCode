@@ -1,7 +1,10 @@
 package springdata.products.controller;
 
+import com.mongodb.util.JSON;
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -56,5 +59,29 @@ public class ProductControllerTest {
                 .andReturn();
 
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), true);
+    }
+
+    @Test
+    public void addProductTest_basic() throws Exception {
+
+        Product testProduct = new Product(1, "test-prod-1", 22.99, 10);
+        JSONObject testJson = new JSONObject("{\"id\": 1, \"name\": \"test-prod-1\", \"price\": 22.99, " +
+                "\"quantity\": 10}");
+
+        when(productService.addProduct(Mockito.any(Product.class))).thenReturn(
+                testProduct.toString()
+        );
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .post("/api/product/new")
+                .accept(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(testJson.toString());
+
+        MvcResult result = mock.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string(testProduct.toString()))
+                .andReturn();
     }
 }
