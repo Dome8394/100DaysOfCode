@@ -11,11 +11,19 @@ public interface IProduct {
      * Returns a list of products.
      * @return List<Product>
      */
-    public List<Product> getAll();
+    List<Product> getAll();
 
     /**
      * Returns a single product.
      * @return Product
      */
-    public Optional<Product> getProduct(int id);
+    Optional<Product> getProduct(int id);
+
+    /**
+     * Adds a product to the database.
+     *
+     * @param product
+     * @return String
+     */
+    String addProduct(Product product);
 }
