@@ -21,6 +21,11 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    /**
+     * Endpoint to retrieve all available products.
+     *
+     * @return List
+     */
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public List<Product> getAll() {
         return productService.getAll();
