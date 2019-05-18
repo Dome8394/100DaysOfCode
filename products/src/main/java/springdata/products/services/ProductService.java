@@ -54,19 +54,10 @@ public class ProductService implements IProduct {
      */
     @Override
     public String addProduct(Product product) {
-
-        if (!repository.exists(Example.of(product))) {
-
-            log.info("check was successfull!");
-
-            return "Product is already registered!";
-
-        } else {
-            log.info("check was successfull and object should not appear twice!");
+            log.info("check was successfull");
 
             repository.save(product);
             return product.toString();
-        }
     }
 
 

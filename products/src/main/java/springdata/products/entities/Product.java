@@ -1,12 +1,14 @@
 package springdata.products.entities;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Product class
  * @author  Dominik Kesim
  * @date 28.04.19
  */
+@Document(collection = "products")
 public class Product {
 
     @Id
