@@ -1,9 +1,10 @@
 package springdata.products.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ResponseBody;
 import springdata.products.entities.Product;
 import springdata.products.interfaces.IProduct;
 import springdata.products.repository.ProductRepository;
@@ -19,6 +20,8 @@ import java.util.Optional;
  */
 @Component
 public class ProductService implements IProduct {
+
+    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
 
     @Autowired
     private ProductRepository repository;
@@ -52,12 +55,18 @@ public class ProductService implements IProduct {
     @Override
     public String addProduct(Product product) {
 
-        if ((!repository.exists(Example.of(product)))) {
+        if (!repository.exists(Example.of(product))) {
+
+            log.info("check was successfull!");
+
+            return "Product is already registered!";
+
+        } else {
+            log.info("check was successfull and object should not appear twice!");
+
             repository.save(product);
             return product.toString();
         }
-
-        return "Product is already registered!";
     }
 
 
