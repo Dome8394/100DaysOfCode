@@ -19,6 +19,9 @@ import springdata.products.entities.Product;
 import springdata.products.services.ProductService;
 
 import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -53,12 +56,9 @@ public class ProductControllerTest {
 
         MvcResult result = mock.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(content().string("[{id: 1, name: test-prod-1, price: 21.99, quantity: 10}," +
-                        "{id: 2, name: test-prod-2, price: 20.99, quantity: 10}, " +
-                        "{id: 3, name: test-prod-3, price: 19.99, quantity: 10}]"))
                 .andReturn();
 
-        //JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), true);
+        assertEquals(result.getResponse().getContentAsString(), expected);
     }
 
     @Test

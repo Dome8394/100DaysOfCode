@@ -37,22 +37,27 @@ public class ProductController {
      * @param id
      * @return Product entity
      */
-    @RequestMapping(value = "/product/{id}")
-    public Optional<Product> getSingleProduct(@PathVariable int id) {
+    @RequestMapping(value = "/products/{id:\\d+}")
+    public Optional<Product> getSingleProduct(@PathVariable String id) {
         return productService.getProduct(id);
     }
 
     /**
      * Endpoint to add a product to the sortiment.
      *
-     * @param product
+     * @param productDetails
      * @return String
      */
-    @RequestMapping(value = "/product/new", method = RequestMethod.POST,
+    @RequestMapping(method = RequestMethod.POST, value = "/add/new",
             consumes = {"application/json", "application/x-www-form-urlencoded"},
             produces = {"application/json", "application/x-www-form-urlencoded"})
-    public String addProduct(@RequestBody Product product) {
-        productService.addProduct(product);
-        return product.toString();
+    public void addProduct(@RequestBody Product productDetails) {
+        productService.addProduct(productDetails);
+        //return productDetails.toString();
+    }
+
+    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    public String hello() {
+        return "Hello";
     }
 }
