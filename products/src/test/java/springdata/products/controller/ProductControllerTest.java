@@ -19,6 +19,9 @@ import springdata.products.entities.Product;
 import springdata.products.services.ProductService;
 
 import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,14 +39,14 @@ public class ProductControllerTest {
     @Test
     public void getAllTest_basic() throws Exception{
 
-        String expected = "[{\"id\": 1, \"name\": \"test-prod-1\", \"price\": 21.99, \"quantity\": 10}," +
-                "{\"id\": 2, \"name\": \"test-prod-2\", \"price\": 20.99, \"quantity\": 10}," +
-                "{\"id\": 3, \"name\": \"test-prod-3\", \"price\": 19.99, \"quantity\": 10}]";
+        String expected = "[{\"id\": \"1\", \"name\": \"test-prod-1\", \"price\": 21.99, \"quantity\": 10}," +
+                "{\"id\": \"2\", \"name\": \"test-prod-2\", \"price\": 20.99, \"quantity\": 10}," +
+                "{\"id\": \"3\", \"name\": \"test-prod-3\", \"price\": 19.99, \"quantity\": 10}]";
 
         when(productService.getAll()).thenReturn(
-                Arrays.asList(new Product(1, "test-prod-1", 21.99, 10),
-                        new Product(2, "test-prod-2", 20.99, 10),
-                        new Product(3, "test-prod-3", 19.99, 10))
+                Arrays.asList(new Product("1", "test-prod-1", 21.99, 10),
+                        new Product("2", "test-prod-2", 20.99, 10),
+                        new Product("3", "test-prod-3", 19.99, 10))
 
         );
 
@@ -53,19 +56,16 @@ public class ProductControllerTest {
 
         MvcResult result = mock.perform(request)
                 .andExpect(status().isOk())
-                .andExpect(content().json("[{id: 1, name: test-prod-1, price: 21.99, quantity: 10}," +
-                        "{id: 2, name: test-prod-2, price: 20.99, quantity: 10}, " +
-                        "{id: 3, name: test-prod-3, price: 19.99, quantity: 10}]"))
                 .andReturn();
 
-        JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), true);
+        assertEquals(result.getResponse().getContentAsString(), expected);
     }
 
     @Test
     public void addProductTest_basic() throws Exception {
 
-        Product testProduct = new Product(1, "test-prod-1", 22.99, 10);
-        JSONObject testJson = new JSONObject("{\"id\": 1, \"name\": \"test-prod-1\", \"price\": 22.99, " +
+        Product testProduct = new Product("1", "test-prod-1", 22.99, 10);
+        JSONObject testJson = new JSONObject("{\"id\": \"1\", \"name\": \"test-prod-1\", \"price\": 22.99, " +
                 "\"quantity\": 10}");
 
         when(productService.addProduct(Mockito.any(Product.class))).thenReturn(

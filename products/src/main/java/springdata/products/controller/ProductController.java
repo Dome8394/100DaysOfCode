@@ -53,18 +53,18 @@ public class ProductController {
     /**
      * Endpoint to add a product to the sortiment.
      *
-     * @param product
+     * @param productDetails
      * @return String
      */
     @RequestMapping(value = "/product/add", method = RequestMethod.POST,
             consumes = {"application/json", "application/x-www-form-urlencoded"},
             produces = {"application/json", "application/x-www-form-urlencoded"})
-    public String addProduct(@RequestBody Product product) {
+    public String addProduct(@RequestBody Product productDetails) {
 
         // logging info if endpoint is even called by dispatcher
         logger.info("Endpoint '/product/new' hit!");
 
-        productService.addProduct(product);
-        return product.toString();
+        productService.addProduct(productDetails);
+        return productDetails.toString();
     }
 }
