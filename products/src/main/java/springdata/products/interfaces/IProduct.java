@@ -17,7 +17,7 @@ public interface IProduct {
      * Returns a single product.
      * @return Product
      */
-    Optional<Product> getProduct(int id);
+    Optional<Product> getProduct(String id);
 
     /**
      * Adds a product to the database.

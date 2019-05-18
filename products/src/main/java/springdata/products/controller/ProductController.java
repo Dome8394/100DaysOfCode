@@ -1,5 +1,8 @@
 package springdata.products.controller;
 
+import javafx.application.Application;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springdata.products.entities.Product;
@@ -15,8 +18,10 @@ import java.util.Optional;
  * @date 28.04.19
  */
 @RestController
-@RequestMapping(value = "api/")
+@RequestMapping(value = "/api")
 public class ProductController {
+
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
     @Autowired
     private ProductService productService;
@@ -28,6 +33,9 @@ public class ProductController {
      */
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public List<Product> getAll() {
+
+        logger.info("Endpoint /products hit!");
+
         return productService.getAll();
     }
 
@@ -37,8 +45,8 @@ public class ProductController {
      * @param id
      * @return Product entity
      */
-    @RequestMapping(value = "/product/{id}")
-    public Optional<Product> getSingleProduct(@PathVariable int id) {
+    @RequestMapping(value = "/products/find/{id}")
+    public Optional<Product> getSingleProduct(@PathVariable String id) {
         return productService.getProduct(id);
     }
 
@@ -48,10 +56,14 @@ public class ProductController {
      * @param product
      * @return String
      */
-    @RequestMapping(value = "/product/new", method = RequestMethod.POST,
+    @RequestMapping(value = "/product/add", method = RequestMethod.POST,
             consumes = {"application/json", "application/x-www-form-urlencoded"},
             produces = {"application/json", "application/x-www-form-urlencoded"})
     public String addProduct(@RequestBody Product product) {
+
+        // logging info if endpoint is even called by dispatcher
+        logger.info("Endpoint '/product/new' hit!");
+
         productService.addProduct(product);
         return product.toString();
     }

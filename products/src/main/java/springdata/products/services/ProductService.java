@@ -39,7 +39,7 @@ public class ProductService implements IProduct {
      * @param id
      * @return Product entity
      */
-    public Optional<Product> getProduct(int id) {
+    public Optional<Product> getProduct(String id) {
         return repository.findById(id);
     }
 
