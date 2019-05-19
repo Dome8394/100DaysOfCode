@@ -23,8 +23,11 @@ public class ProductController {
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     /**
      * Endpoint to retrieve all available products.

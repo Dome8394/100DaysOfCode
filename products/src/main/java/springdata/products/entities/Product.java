@@ -59,8 +59,8 @@ public class Product {
 
     @Override
     public String toString() {
-        return String.format("Product[id = %s, name = '%s', price = '%f'" +
+        return String.format("Product[name = '%s', price = '%f'" +
                         "quantity = '%d']",
-                id, name, price, quantity);
+                name, price, quantity);
     }
 }
