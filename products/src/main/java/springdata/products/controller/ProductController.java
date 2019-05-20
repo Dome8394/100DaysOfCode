@@ -48,7 +48,7 @@ public class ProductController {
      * @return Product entity
      */
     @RequestMapping(value = "/products/find/{id}")
-    public Optional<Product> getSingleProduct(@PathVariable String id) {
+    public Product getSingleProduct(@PathVariable String id) {
         return productService.getProduct(id);
     }
 
