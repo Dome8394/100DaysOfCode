@@ -31,7 +31,7 @@ public class ProductController {
     /**
      * Endpoint to retrieve all available products.
      *
-     * @return List
+     * @return List must not be null
      */
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public List<Product> getAll() {
@@ -44,8 +44,8 @@ public class ProductController {
     /**
      * Endpoint to retrieve a single product by its ID.
      *
-     * @param id
-     * @return Product entity
+     * @param id must not be null
+     * @return Product must not be null
      */
     @RequestMapping(value = "/products/find/{id}")
     public Product getSingleProduct(@PathVariable String id) {
@@ -55,7 +55,7 @@ public class ProductController {
     /**
      * Endpoint to add a product to the sortiment.
      *
-     * @param productDetails
+     * @param productDetails must not be null
      * @return String
      */
     @RequestMapping(value = "/product/add", method = RequestMethod.POST,
@@ -68,5 +68,53 @@ public class ProductController {
 
         productService.addProduct(productDetails);
         return productDetails.toString();
+    }
+
+    /**
+     * Updates a product's name.
+     *
+     * @param name must not be null
+     * @param id must not be null
+     */
+    @RequestMapping(value = "/product/update/{id}/{name}", method = RequestMethod.PUT, params = {"id", "name"})
+    public void updateProductByName(@PathVariable String id,
+                                    @PathVariable String name) {
+
+        // logging info if endpoint is even called by dispatcher
+        logger.info("Endpoint '/product/update/'" + id + "/" + name + "hit!");
+
+        productService.updateProductByName(id, name);
+    }
+
+    /**
+     * Updates a product's price.
+     *
+     * @param price must not be null
+     * @param id must not be null
+     */
+    @RequestMapping(value = "/product/update/{id}/{price}", method = RequestMethod.PUT, params = {"id", "price"})
+    public void updateProductByPrice(@PathVariable String id,
+                              @PathVariable double price) {
+
+        // logging info if endpoint is even called by dispatcher
+        logger.info("Endpoint '/product/update/'" + id + "/" + price + "hit!");
+
+        productService.updateProductByPrice(id, price);
+    }
+
+    /**
+     * Updates a product's quantity.
+     *
+     * @param quantity must not be null
+     * @param id must not be null
+     */
+    @RequestMapping(value = "/product/update/{id}/{quantity}", method = RequestMethod.PUT, params = {"id", "quantity"})
+    public void updateProductByQuantity(@PathVariable String id,
+                                     @PathVariable int quantity) {
+
+        // logging info if endpoint is even called by dispatcher
+        logger.info("Endpoint '/product/update/'" + id + "/" + quantity + "hit!");
+
+        productService.updateProductByPrice(id, quantity);
     }
 }

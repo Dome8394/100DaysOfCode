@@ -22,8 +22,33 @@ public interface IProduct {
     /**
      * Adds a product to the database.
      *
-     * @param product
-     * @return String
+     * @param product must not be null.
      */
      void addProduct(Product product);
+
+    /**
+     * Updates information of an existing product
+     *
+     * @param id must not be null.
+     * @param name must not be null.
+     */
+    void updateProductByName(String id, String name);
+
+    /**
+     * Updates information of an existing product
+     *
+     * @param id must not be null.
+     * @param price must not be null.
+     */
+    void updateProductByPrice(String id, double price);
+
+    /**
+     * Updates information of an existing product
+     *
+     * @param id must not be null.
+     * @param quantity must not be null.
+     */
+    void updateProductByQuantity(String id, int quantity);
+
+    void deleteProduct(Product product);
 }
