@@ -1,17 +1,12 @@
 package com.codingdays.spring.springdata.entities;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.annotation.Generated;
-import java.math.BigInteger;
-import java.util.LinkedList;
 
 @Document(collection = "customers")
 public class CustomerEntity {
 
     @org.springframework.data.annotation.Id
-    private int _id;
+    private String _id;
 
     private String firstName;
     private String lastName;
@@ -19,17 +14,17 @@ public class CustomerEntity {
     public CustomerEntity() {
     }
 
-    public CustomerEntity(String firstName, String lastName, int _id) {
+    public CustomerEntity(String firstName, String lastName, String _id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this._id = _id;
     }
 
-    public int getId() {
+    public String getId() {
         return _id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         _id = _id;
     }
 
