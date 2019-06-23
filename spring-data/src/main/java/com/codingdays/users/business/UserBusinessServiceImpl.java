@@ -1,18 +1,13 @@
 package com.codingdays.users.business;
 
 import com.codingdays.users.entities.User;
-import com.codingdays.users.repositories.users.UserRepository;
 import com.codingdays.users.services.UserBusinessService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author dominik on 08.03.19
