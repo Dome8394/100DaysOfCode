@@ -8,15 +8,15 @@ public class User {
     @org.springframework.data.annotation.Id
     private String _id;
 
-    private String firstName;
-    private String lastName;
+    private String username;
+    private String password;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String _id) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String username, String password, String _id) {
+        this.username = username;
+        this.password = password;
         this._id = _id;
     }
 
@@ -28,26 +28,26 @@ public class User {
         _id = _id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getPassword() {
+        return password;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 
     @Override
     public String toString() {
-        return String.format("Customer[Id = %s, firstName = '%s', lastName = '%s']",
-                _id, firstName, lastName);
+        return String.format("Customer[Id = %s, username = '%s', password = '%s']",
+                _id, username, password);
     }
 }
