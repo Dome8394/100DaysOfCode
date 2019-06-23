@@ -1,8 +1,8 @@
 package com.codingdays.spring.springdata.controller;
 
-import com.codingdays.users.business.CustomerBusinessService;
-import com.codingdays.users.controllers.users.CustomerController;
-import com.codingdays.users.entities.CustomerEntity;
+import com.codingdays.users.business.UserBusinessServiceImpl;
+import com.codingdays.users.web.users.UserController;
+import com.codingdays.users.entities.User;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,8 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author dominik on 14.01.19
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(CustomerController.class)
-public class CustomerControllerTest {
+@WebMvcTest(UserController.class)
+public class UserControllerTest {
 
     private String expectedBilbo = "{\"firstName\": Bilbo, \"lastName\": \"Baggins\", \"id\": 1}";
     private String expectedMultipleCustomers = "[{\"firstName\": Will, \"lastName\": \"Smith\", \"id\": 1}," +
@@ -46,7 +46,7 @@ public class CustomerControllerTest {
     MockMvc mock;
 
     @MockBean
-    private CustomerBusinessService businessService;
+    private UserBusinessServiceImpl businessService;
 
     /**
      * Asserting if retrieveAllCustomers is called propriately by the CustomerController.
@@ -60,7 +60,7 @@ public class CustomerControllerTest {
         String expected = "[{\"firstName\": \"Will\", \"lastName\": \"Smith\", \"id\": 1}]";
 
         when(businessService.retrieveAllCustomers()).thenReturn(
-                Arrays.asList(new CustomerEntity("Will", "Smith", "1"))
+                Arrays.asList(new User("Will", "Smith", "1"))
         );
 
         RequestBuilder request = MockMvcRequestBuilders
@@ -85,9 +85,9 @@ public class CustomerControllerTest {
     public void getCustomers_multipleCustomers_basic() throws Exception {
 
         when(businessService.retrieveAllCustomers()).thenReturn(
-                Arrays.asList(new CustomerEntity("Will", "Smith", "1"),
-                        new CustomerEntity("Peter", "Petigrew", "2"),
-                        new CustomerEntity("Sam", "Crow", "3"))
+                Arrays.asList(new User("Will", "Smith", "1"),
+                        new User("Peter", "Petigrew", "2"),
+                        new User("Sam", "Crow", "3"))
         );
 
         RequestBuilder request = MockMvcRequestBuilders
@@ -112,7 +112,7 @@ public class CustomerControllerTest {
     @Test
     public void getCustomers_multipleCustomers_nullCustomer() throws Exception {
         when(businessService.retrieveAllCustomers()).thenReturn(
-                Arrays.asList(new CustomerEntity())
+                Arrays.asList(new User())
         );
 
         RequestBuilder request = MockMvcRequestBuilders
@@ -128,7 +128,7 @@ public class CustomerControllerTest {
     }
 
     /**
-     * Asserts if a customer is retrieved by his or her id successfully.
+     * Asserts if a users is retrieved by his or her id successfully.
      *
      * @throws Exception
      */
@@ -136,11 +136,11 @@ public class CustomerControllerTest {
     public void getCustomerById_basic() throws Exception {
 
         when(businessService.retrieveCustomerById("1")).thenReturn(
-                Optional.of(new CustomerEntity("Bilbo", "Baggins", "1"))
+                Optional.of(new User("Bilbo", "Baggins", "1"))
         );
 
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/api/customer/{Id}", 1)
+                .get("/api/users/{Id}", 1)
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mock.perform(request)
@@ -161,15 +161,15 @@ public class CustomerControllerTest {
     @Test
     public void saveCustomerTest_basic() throws Exception {
 
-        CustomerEntity customerEntity = new CustomerEntity("Will", "Smith", "1");
+        User user = new User("Will", "Smith", "1");
         JSONObject jsonObject = new JSONObject("{\"firstName\": Will, \"lastName\": \"Smith\", \"id\": 1}");
 
-        when(businessService.saveCustomer(Mockito.any(CustomerEntity.class))).thenReturn(
-                customerEntity.toString()
+        when(businessService.saveCustomer(Mockito.any(User.class))).thenReturn(
+                user.toString()
         );
 
         RequestBuilder request = MockMvcRequestBuilders
-                .post("/api/customer/new")
+                .post("/api/users/new")
                 .accept(MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonObject.toString());

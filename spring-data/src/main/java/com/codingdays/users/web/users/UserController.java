@@ -1,20 +1,21 @@
-package com.codingdays.users.controllers.users;
+package com.codingdays.users.web.users;
 
-import com.codingdays.users.business.CustomerBusinessService;
-import com.codingdays.users.entities.CustomerEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.codingdays.users.business.UserBusinessServiceImpl;
+import com.codingdays.users.entities.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @RestController
 @RequestMapping(value = "/api")
-public class CustomerController {
+public class UserController {
 
-    @Autowired
-    private CustomerBusinessService businessService;
+    private final UserBusinessServiceImpl userBusinessService;
+
+    public UserController(UserBusinessServiceImpl userBusinessService) {
+        this.userBusinessService = userBusinessService;
+    }
 
 
     /**
@@ -22,33 +23,33 @@ public class CustomerController {
      * in the database.
      */
     @RequestMapping(method = RequestMethod.GET, value = "/customers")
-    public List<CustomerEntity> getCustomers() {
-        return businessService.retrieveAllCustomers();
+    public List<User> getCustomers() {
+        return userBusinessService.getUsers();
     }
 
     /**
-     * Returns a single customer that is found by its Id provided.
+     * Returns a single users that is found by its Id provided.
      * The id is passed as a Request parameter within the URI
      *
-     * @param Id: customer ID
-     * @return CustomerEntity
+     * @param Id: users ID
+     * @return User
      */
     @RequestMapping(method = RequestMethod.GET, value = "/customer/{Id}")
-    public Optional<CustomerEntity> getCustomerById(@PathVariable(value = "Id") String Id) {
-        return businessService.retrieveCustomerById(Id);
+    public User getCustomerById(@PathVariable(value = "Id") String Id) {
+        return userBusinessService.getUserById(Id);
     }
 
     /**
-     * Saves a customer Object to the database with the appropriate information provided.
-     * A customer is saved with its firstname and lastname. The id of a new customer object is
-     * automatically generated as specified in the CustomerEntity class.
+     * Saves a users Object to the database with the appropriate information provided.
+     * A users is saved with its firstname and lastname. The id of a new users object is
+     * automatically generated as specified in the User class.
      *
-     * @param customerDetails : details of customer object as a JSON
+     * @param customerDetails : details of users object as a JSON
      */
     @PostMapping
     @RequestMapping(method = RequestMethod.POST, value = "/customer/new", consumes = {"application/json",
             "application/x-www-form-urlencoded"}, produces = {"application/x-www-form-urlencoded", "application/json"})
-    public String saveCustomer(@RequestBody CustomerEntity customerDetails) {
-         return businessService.saveCustomer(customerDetails);
+    public String saveCustomer(@RequestBody User customerDetails) {
+        return userBusinessService.saveUser(customerDetails);
     }
 }

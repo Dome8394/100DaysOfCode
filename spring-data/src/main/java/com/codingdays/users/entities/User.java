@@ -3,7 +3,7 @@ package com.codingdays.users.entities;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "users")
-public class CustomerEntity {
+public class User {
 
     @org.springframework.data.annotation.Id
     private String _id;
@@ -11,10 +11,10 @@ public class CustomerEntity {
     private String firstName;
     private String lastName;
 
-    public CustomerEntity() {
+    public User() {
     }
 
-    public CustomerEntity(String firstName, String lastName, String _id) {
+    public User(String firstName, String lastName, String _id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this._id = _id;

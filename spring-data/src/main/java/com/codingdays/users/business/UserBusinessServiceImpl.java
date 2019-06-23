@@ -1,9 +1,14 @@
 package com.codingdays.users.business;
 
-import com.codingdays.users.entities.CustomerEntity;
-import com.codingdays.users.repositories.customer.CustomerEntityRepository;
+import com.codingdays.users.entities.User;
+import com.codingdays.users.repositories.users.UserRepository;
+import com.codingdays.users.services.UserBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,41 +19,32 @@ import java.util.Optional;
  * @project spring-data
  */
 @Component
-public class CustomerBusinessService {
+public class UserBusinessServiceImpl implements UserBusinessService {
 
-    @Autowired
-    private CustomerEntityRepository repository;
+    private final MongoTemplate mongoTemplate;
 
-    /**
-     * Retrieves all users stored in the database.
-     * @return List of objects with type CustomerEntity
-     */
-    public List<CustomerEntity> retrieveAllCustomers() {
-        return repository.findAll();
+    public UserBusinessServiceImpl(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
     }
 
-    /**
-     * To be done
-     * @param Id
-     * @return
-     */
-    public Optional<CustomerEntity> retrieveCustomerById(String Id) {
-        return repository.findById(Id);
+    @Override
+    public List<User> getUsers() {
+        return mongoTemplate.findAll(User.class);
     }
 
-    /**
-     * To be done
-     * @param customerEntity
-     * @return
-     */
-    public String saveCustomer(CustomerEntity customerEntity) {
+    @Override
+    public User getUserById(String Id) {
+        User user;
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(Id));
 
-        // first check if customer is already saved in db
-        if(repository.exists(Example.of(customerEntity))) {
-            return "The customer " + customerEntity.toString() + " is already registered!";
-        } else {
-            repository.save(customerEntity);
-            return customerEntity.toString();
-        }
+        user = mongoTemplate.findOne(query, User.class);
+        return user;
+    }
+
+    @Override
+    public String saveUser(User user) {
+        mongoTemplate.save(user);
+        return user.toString();
     }
 }

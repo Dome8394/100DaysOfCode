@@ -1,4 +1,4 @@
-package com.codingdays.users.controllers.home;
+package com.codingdays.users.web.home;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
