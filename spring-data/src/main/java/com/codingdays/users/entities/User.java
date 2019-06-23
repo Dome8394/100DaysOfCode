@@ -1,8 +1,8 @@
-package com.codingdays.spring.springdata.entities;
+package com.codingdays.users.entities;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "customers")
+@Document(collection = "users")
 public class CustomerEntity {
 
     @org.springframework.data.annotation.Id

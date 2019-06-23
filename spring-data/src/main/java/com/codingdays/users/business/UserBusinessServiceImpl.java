@@ -1,13 +1,11 @@
-package com.codingdays.spring.springdata.business;
+package com.codingdays.users.business;
 
-import com.codingdays.spring.springdata.entities.CustomerEntity;
-import com.codingdays.spring.springdata.repositories.customer.CustomerEntityRepository;
-import org.bson.types.ObjectId;
+import com.codingdays.users.entities.CustomerEntity;
+import com.codingdays.users.repositories.customer.CustomerEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +20,7 @@ public class CustomerBusinessService {
     private CustomerEntityRepository repository;
 
     /**
-     * Retrieves all customers stored in the database.
+     * Retrieves all users stored in the database.
      * @return List of objects with type CustomerEntity
      */
     public List<CustomerEntity> retrieveAllCustomers() {

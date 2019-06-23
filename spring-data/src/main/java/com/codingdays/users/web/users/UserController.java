@@ -1,7 +1,7 @@
-package com.codingdays.spring.springdata.controllers.customers;
+package com.codingdays.users.controllers.users;
 
-import com.codingdays.spring.springdata.business.CustomerBusinessService;
-import com.codingdays.spring.springdata.entities.CustomerEntity;
+import com.codingdays.users.business.CustomerBusinessService;
+import com.codingdays.users.entities.CustomerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ public class CustomerController {
 
 
     /**
-     * Returns a list of all customers that are currently saved
+     * Returns a list of all users that are currently saved
      * in the database.
      */
     @RequestMapping(method = RequestMethod.GET, value = "/customers")

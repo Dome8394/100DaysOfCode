@@ -1,9 +1,7 @@
-package com.codingdays.spring.springdata.repositories.customer;
+package com.codingdays.users.repositories.customer;
 
-import com.codingdays.spring.springdata.entities.CustomerEntity;
+import com.codingdays.users.entities.CustomerEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
-
-import java.util.List;
 
 public interface CustomerEntityRepository extends MongoRepository<CustomerEntity, String> {
 }

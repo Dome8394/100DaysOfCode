@@ -1,14 +1,10 @@
 package com.codingdays.spring.springdata.controller;
 
-import com.codingdays.spring.springdata.business.CustomerBusinessService;
-import com.codingdays.spring.springdata.controllers.customers.CustomerController;
-import com.codingdays.spring.springdata.entities.CustomerEntity;
-import org.bson.types.ObjectId;
-import org.json.JSONArray;
+import com.codingdays.users.business.CustomerBusinessService;
+import com.codingdays.users.controllers.users.CustomerController;
+import com.codingdays.users.entities.CustomerEntity;
 import org.json.JSONObject;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.Request;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -22,21 +18,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.math.BigInteger;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Optional;
 
-import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -71,11 +60,11 @@ public class CustomerControllerTest {
         String expected = "[{\"firstName\": \"Will\", \"lastName\": \"Smith\", \"id\": 1}]";
 
         when(businessService.retrieveAllCustomers()).thenReturn(
-                Arrays.asList(new CustomerEntity("Will", "Smith", 1))
+                Arrays.asList(new CustomerEntity("Will", "Smith", "1"))
         );
 
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/api/customers")
+                .get("/api/users")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mock.perform(request)
@@ -96,13 +85,13 @@ public class CustomerControllerTest {
     public void getCustomers_multipleCustomers_basic() throws Exception {
 
         when(businessService.retrieveAllCustomers()).thenReturn(
-                Arrays.asList(new CustomerEntity("Will", "Smith", 1),
-                        new CustomerEntity("Peter", "Petigrew", 2),
-                        new CustomerEntity("Sam", "Crow", 3))
+                Arrays.asList(new CustomerEntity("Will", "Smith", "1"),
+                        new CustomerEntity("Peter", "Petigrew", "2"),
+                        new CustomerEntity("Sam", "Crow", "3"))
         );
 
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/api/customers")
+                .get("/api/users")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mock.perform(request)
@@ -127,7 +116,7 @@ public class CustomerControllerTest {
         );
 
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/api/customers")
+                .get("/api/users")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mock.perform(request)
@@ -146,8 +135,8 @@ public class CustomerControllerTest {
     @Test
     public void getCustomerById_basic() throws Exception {
 
-        when(businessService.retrieveCustomerById(1)).thenReturn(
-                Optional.of(new CustomerEntity("Bilbo", "Baggins", 1))
+        when(businessService.retrieveCustomerById("1")).thenReturn(
+                Optional.of(new CustomerEntity("Bilbo", "Baggins", "1"))
         );
 
         RequestBuilder request = MockMvcRequestBuilders
@@ -172,7 +161,7 @@ public class CustomerControllerTest {
     @Test
     public void saveCustomerTest_basic() throws Exception {
 
-        CustomerEntity customerEntity = new CustomerEntity("Will", "Smith", 1);
+        CustomerEntity customerEntity = new CustomerEntity("Will", "Smith", "1");
         JSONObject jsonObject = new JSONObject("{\"firstName\": Will, \"lastName\": \"Smith\", \"id\": 1}");
 
         when(businessService.saveCustomer(Mockito.any(CustomerEntity.class))).thenReturn(
